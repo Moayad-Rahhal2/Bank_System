@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 5.3//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-5.3.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bank_system</property>
+        <property name="hibernate.connection.username">springstudent</property>
+        <property name="hibernate.connection.password">springstudent</property>
+
+        <!-- JDBC connection pool (use built-in) -->
+        <property name="connection.pool_size">10</property>
+
+        <!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Enable logging of SQL statements -->
+        <property name="show_sql">true</property>
+
+        <!-- Automatically update the database schema -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- List of entity classes -->
+        <mapping class="com.banksystem.entity.User"/>
+        <mapping class="com.banksystem.entity.Account"/>
+        <mapping class="com.banksystem.entity.Transaction"/>
+
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,40 @@
+-- Users Table (with Jordanian phone validation)
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL CHECK (email REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
+    phone VARCHAR(10) UNIQUE NOT NULL CHECK (phone REGEXP '^07[789][0-9]{7}$'),
+    password_hash varchar(64) NOT NULL, -- SHA-256
+    salt CHAR(32) NOT NULL,-- A salt is a random value added to passwords before hashing to:
+
+                               --   Prevent rainbow table attacks (precomputed hash databases)
+
+                                --  Ensure identical passwords have different hashes
+
+                                --  Thwart brute-force attempts
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Accounts Table
+CREATE TABLE accounts (
+    account_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    account_type ENUM('CHECKING', 'SAVINGS') NOT NULL,
+    account_number CHAR(12) UNIQUE NOT NULL,
+    balance DECIMAL(15, 2) NOT NULL DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Transactions Table
+CREATE TABLE transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER') NOT NULL,
+    description VARCHAR(255),
+    related_account_id INT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+);

@@ -1,0 +1,23 @@
+src/
+├── main/
+│   ├── java/
+│   │   └── com/
+│   │       └── banksystem/
+│   │           ├── model/               # Your models: User, Account, Transaction
+│   │           ├── dao/                 # Data access: UserDAO, AccountDAO, TransactionDAO
+│   │           ├── service/             # Business logic: AuthService, BankService
+│   │           ├── util/                # Utility classes: PasswordHasher, InputValidator, DBConnection
+│   │           ├── exception/           # Custom exceptions & handlers
+│   │           └── app/                 # Main application entrypoint
+│   │               └── Main.java        # Main class
+│
+├── test/
+│   └── java/
+│       └── com/
+│           └── banksystem/
+│               └── tessst/             # Unit tests
+
+
+how to run the application if it's like above:
+mvn clean package
+java -cp target/banksystem-pro-1.0.0.jar com.banksystem.Main
